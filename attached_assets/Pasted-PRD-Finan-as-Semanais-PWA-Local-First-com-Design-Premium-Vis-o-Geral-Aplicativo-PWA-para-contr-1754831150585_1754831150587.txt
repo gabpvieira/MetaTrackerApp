@@ -1,0 +1,183 @@
+PRD: Finanças Semanais – PWA Local-First com Design Premium
+📖 Visão Geral
+Aplicativo PWA para controle de receitas, despesas e metas semanais, totalmente local-first (dados salvos apenas no dispositivo, mesmo após fechar ou reinstalar).
+
+O sistema deve calcular progresso de meta semanal automaticamente, considerando semanas de domingo a sábado. O design será 100% inspirado nas referências anexadas — interface limpa, tipografia moderna, degradês elegantes, microinterações e responsividade.
+
+🎯 Objetivos
+Gerenciar receitas, despesas e categorias de forma simples e rápida.
+
+Calcular progresso da meta semanal em tempo real ao adicionar/editar/excluir transações.
+
+Interface visualmente premium e responsiva, com microinterações suaves.
+
+Operar offline como PWA, com dados persistentes no frontend (IndexedDB + criptografia).
+
+Permitir importação/exportação de dados para backup/migração.
+
+👥 Público-Alvo
+Autônomos, MEIs e freelancers que querem controlar metas semanais.
+
+Usuários que valorizam design moderno e experiência fluida.
+
+Pessoas que preferem não depender de nuvem para guardar seus dados financeiros.
+
+📌 Escopo do MVP
+Inclui:
+
+Dashboard semanal com meta, receita, progresso, status e totais anuais.
+
+CRUD de Receitas, Despesas e Categorias.
+
+Cálculo de progresso Domingo→Sábado.
+
+Relatórios com gráficos por categoria e período.
+
+Backup/Restore JSON + Export CSV.
+
+PWA instalável e totalmente offline.
+
+✅ Requisitos Funcionais
+1. Autenticação Local (opcional)
+PIN ou biometria (WebAuthn) para desbloqueio.
+
+Dados criptografados no IndexedDB (AES-GCM via WebCrypto).
+
+2. Dashboard
+Cards principais:
+
+Meta da Semana
+
+Receita da Semana
+
+Receita Total (Ano)
+
+Despesa Total (Ano)
+
+Progresso da Meta:
+
+Cálculo automático (domingo→sábado).
+
+Barra animada e status (“Atingida” ou “Pendente”).
+
+Texto “Falta R$ X para atingir a meta”.
+
+Label da semana: “03 ago – 09 ago 2025”.
+
+Receitas por Categoria (Esta Semana): gráfico circular + legenda.
+
+3. Transações (Receitas e Despesas)
+Campos: Data, Categoria, Valor, Descrição.
+
+CRUD completo.
+
+Mudança de valor/data atualiza progresso da meta.
+
+4. Categorias
+Tipo: Receita ou Despesa.
+
+Nome único por tipo.
+
+Cor e ícone personalizados.
+
+5. Relatórios
+Filtros: Semana, Mês, Ano, Personalizado.
+
+Gráficos:
+
+Pizza/rosca por categoria.
+
+Linha/barras para evolução.
+
+Exportar dados em CSV.
+
+6. Backup & Restauração
+Exportar JSON cifrado.
+
+Importar JSON/CSV com pré-visualização.
+
+⚙️ Requisitos Não Funcionais
+Stack: React + TypeScript + Vite, TailwindCSS, shadcn/ui, Zustand, Dexie, Recharts/ApexCharts.
+
+IndexedDB com criptografia.
+
+PWA com Workbox (offline-first).
+
+Desempenho: TTI < 2s, bundle < 200KB gzip.
+
+Acessibilidade WCAG 2.1 AA.
+
+🎨 Design (Inspirado nas imagens enviadas)
+Tipografia
+General Sans Variable — pesos Regular, Medium, Semibold.
+
+Valores monetários com espaçamento monoespaçado para precisão.
+
+Paleta (com degradês)
+#77FFC8 → #B1DAFF (verde-azulado claro)
+
+#B1DAFF → #EBC3FF (azul-lilás suave)
+
+Fundo em gradient radial sutil (tons pastel azul/verde).
+
+Texto: preto 80% no light mode, branco 90% no dark mode.
+
+Estilo de Componentes
+Cards:
+
+Bordas arredondadas grandes (20px+).
+
+Fundo com glassmorphism (transparência + blur).
+
+Sombra suave: 0 4px 24px rgba(0,0,0,0.08).
+
+Ícone no canto, label pequena e valor em destaque.
+
+Gráficos:
+
+Tema minimalista com cores da paleta.
+
+Legendas com badges coloridas e percentuais.
+
+Barras de progresso:
+
+Altura 12–14px, arredondada.
+
+Degradê animado (verde-azulado).
+
+Sidebar:
+
+Ícones minimalistas, labels claras.
+
+Hover com gradiente suave.
+
+Microinterações
+Hover: leve elevação + intensificação de sombra.
+
+Transições: transition-all ease-in-out 200ms.
+
+Animação no carregamento de gráficos e barras.
+
+🗄️ Estrutura de Dados (IndexedDB)
+profiles: id, nome, cor.
+
+settings: metaSemanal, semanaIniciaEm (0), tema.
+
+categories: id, tipo, nome, cor, ícone.
+
+incomes: id, data, categoriaId, valor, descrição.
+
+expenses: id, data, categoriaId, valor, descrição.
+
+🔄 Lógica do Progresso (Domingo→Sábado)
+ts
+Copiar
+Editar
+const start = startOfWeek(today, { weekStartsOn: 0 }); // Domingo
+const end = endOfWeek(today, { weekStartsOn: 0 }); // Sábado
+// Soma receitas na semana
+const receitaSemana = incomes.filter(i => i.date >= start && i.date <= end)
+                             .reduce((acc, i) => acc + i.valor, 0);
+const progresso = Math.min(100, Math.floor((receitaSemana / metaSemanal) * 100));
+Atualizar automaticamente no Dashboard quando receitas forem alteradas.
+
