@@ -12,9 +12,9 @@ export const categorySchema = z.object({
 export const transactionSchema = z.object({
   id: z.string(),
   date: z.date(),
-  categoryId: z.string(),
-  amount: z.number().positive("Valor deve ser positivo"),
-  description: z.string().min(1, "Descrição é obrigatória"),
+  categoryId: z.string().min(1, "Selecione uma categoria"),
+  amount: z.number().positive("Informe um valor maior que zero"),
+  description: z.string().optional(),
   type: z.enum(["income", "expense"]),
   createdAt: z.date(),
 });

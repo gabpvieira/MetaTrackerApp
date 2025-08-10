@@ -126,15 +126,19 @@ export function TransactionForm({ children }: TransactionFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Categoria</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select 
+                    value={field.value ?? ""} 
+                    onValueChange={field.onChange}
+                    disabled={categories.length === 0}
+                  >
                     <FormControl>
                       <SelectTrigger data-testid="select-transaction-category">
                         <SelectValue placeholder="Selecione uma categoria" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
+                      {categories.filter(Boolean).map((category) => (
+                        <SelectItem key={category.id} value={String(category.id)}>
                           <div className="flex items-center space-x-2">
                             <div
                               className="w-3 h-3 rounded-full"
@@ -149,6 +153,14 @@ export function TransactionForm({ children }: TransactionFormProps) {
                       ))}
                     </SelectContent>
                   </Select>
+                  {categories.length === 0 && (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Nenhuma categoria disponível. 
+                      <button type="button" className="text-primary underline ml-1">
+                        Criar categoria
+                      </button>
+                    </p>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}

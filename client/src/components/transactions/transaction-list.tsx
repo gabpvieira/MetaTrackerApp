@@ -22,7 +22,7 @@ export function TransactionList() {
   const { transactions, categories, deleteTransaction } = useFinanceStore();
   const [filters, setFilters] = useState<TransactionFilters>({
     type: "all",
-    categoryId: "",
+    categoryId: "all",
     startDate: "",
     endDate: "",
   });
@@ -30,7 +30,7 @@ export function TransactionList() {
   // Filter transactions
   const filteredTransactions = transactions.filter((transaction) => {
     if (filters.type !== "all" && transaction.type !== filters.type) return false;
-    if (filters.categoryId && transaction.categoryId !== filters.categoryId) return false;
+    if (filters.categoryId !== "all" && transaction.categoryId !== filters.categoryId) return false;
     if (filters.startDate && transaction.date < new Date(filters.startDate)) return false;
     if (filters.endDate && transaction.date > new Date(filters.endDate)) return false;
     return true;
@@ -79,9 +79,9 @@ export function TransactionList() {
                   <SelectValue placeholder="Todas" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todas</SelectItem>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
+                  <SelectItem value="all">Todas</SelectItem>
+                  {categories.filter(Boolean).map((category) => (
+                    <SelectItem key={category.id} value={String(category.id)}>
                       {category.name}
                     </SelectItem>
                   ))}

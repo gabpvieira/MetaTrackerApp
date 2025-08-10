@@ -1,0 +1,125 @@
+Problema
+Na página Transações (criar/editar receita/despesa), o Select de Categoria (e qualquer outro Select) está renderizando algum <SelectItem /> com value="" ou undefined. O shadcn exige que todo SelectItem tenha value não vazio. Além disso, o controle do valor deve usar placeholder via <SelectValue placeholder="..." /> e nunca criar um item de placeholder com value="".
+
+O que fazer
+Revisar todos os Select em Transações (categoria, tipo, etc.) para:
+
+Itens: usar value={String(item.id)} (ou name), nunca ""/undefined.
+
+Placeholder: não criar <SelectItem> de placeholder. O placeholder deve ser somente o <SelectValue placeholder="..."/>.
+
+Valor controlado: quando vazio, o valor do formulário deve ser "" (string vazia) no Select, mas os itens continuam com valores válidos.
+
+Se não houver categorias, desabilitar o Select e exibir mensagem/CTA.
+
+Schema (Zod): campo categoryId obrigatório (z.string().min(1, 'Selecione uma categoria')), amount > 0.
+
+Defaults do Form: categoryId: '' (string vazia), sem undefined.
+
+Mapeamento de categorias: filtrar por tipo (income/expense) e ordenar por nome; garantir que id é string.
+
+Implementação (substituir blocos)
+Schema e Form Defaults
+ts
+Copiar
+Editar
+// schemas/transaction.ts
+import { z } from "zod";
+
+export const transactionSchema = z.object({
+  type: z.enum(["income","expense"]),
+  date: z.string(), // ISO
+  categoryId: z.string().min(1, "Selecione uma categoria"),
+  amount: z.number().positive("Informe um valor maior que zero"),
+  description: z.string().optional(),
+});
+
+export type TransactionForm = z.infer<typeof transactionSchema>;
+ts
+Copiar
+Editar
+// TransacaoForm.tsx (ou equivalente)
+const form = useForm<TransactionForm>({
+  resolver: zodResolver(transactionSchema),
+  defaultValues: {
+    type: initial?.type ?? "income",
+    date: initial?.date ?? new Date().toISOString().slice(0,10),
+    categoryId: initial?.categoryId ?? "", // <<< nunca undefined
+    amount: initial?.amount ? initial.amount/100 : 0,
+    description: initial?.description ?? "",
+  },
+});
+Select de Categoria (shadcn/ui) — versão correta
+tsx
+Copiar
+Editar
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+
+const categorias = useCategoriesByType(form.watch("type")); 
+// garanta que retorna [] quando vazio
+// e que cada item tem { id: string; name: string }
+
+<FormField
+  control={form.control}
+  name="categoryId"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Categoria</FormLabel>
+      <Select
+        value={field.value ?? ""}                 // "" mostra o placeholder
+        onValueChange={(v) => field.onChange(v)}  // nunca undefined aqui
+        disabled={categorias.length === 0}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="Selecione a categoria" />
+        </SelectTrigger>
+        <SelectContent>
+          {categorias.map((c) => (
+            <SelectItem key={c.id} value={String(c.id)}>
+              {c.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {categorias.length === 0 && (
+        <p className="text-xs text-muted-foreground mt-2">
+          Nenhuma categoria para este tipo. <button type="button" onClick={onCreateCategory} className="text-primary underline">Criar categoria</button>
+        </p>
+      )}
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+Garantias no hook/consulta de categorias
+ts
+Copiar
+Editar
+// useCategoriesByType.ts
+export function useCategoriesByType(type: "income"|"expense") {
+  const rows = useLiveQuery(() => db.categories.where({ type }).toArray(), [type]) ?? [];
+  return rows
+    .filter(Boolean)
+    .map(c => ({ id: String(c.id), name: c.name })) // <<< força string
+    .sort((a,b) => a.name.localeCompare(b.name, 'pt-BR'));
+}
+Botão “Limpar seleção” (opcional e seguro)
+Se houver um botão para limpar, não crie SelectItem vazio; apenas:
+
+ts
+Copiar
+Editar
+const clearCategory = () => form.setValue("categoryId", "");
+Testes manuais (aceite)
+Abrir “Nova Transação” sem categorias: Select desabilita e mostra CTA.
+
+Criar 1 categoria e abrir o modal: itens aparecem; nenhum SelectItem tem value="".
+
+Salvar sem escolher categoria: erro do formulário “Selecione uma categoria”.
+
+Editar transação existente: Select abre com a categoria pré-selecionada.
+
+Observações
+A mensagem de erro do overlay do Vite some imediatamente após garantir que nenhum item do Select tenha value="" e que o placeholder não é um item.
+
+Faça um Hard Reload depois da alteração.
+
