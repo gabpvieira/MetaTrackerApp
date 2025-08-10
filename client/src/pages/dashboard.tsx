@@ -5,7 +5,7 @@ import { ProgressChart } from "@/components/dashboard/progress-chart";
 import { CategoryChart } from "@/components/dashboard/category-chart";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 
-export function Dashboard() {
+export default function Dashboard() {
   const { settings } = useFinanceStore();
   
   const { label: weekLabel } = getWeekRange(new Date(), settings?.weekStartsOn as 0);

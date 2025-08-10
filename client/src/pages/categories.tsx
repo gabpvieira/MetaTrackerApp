@@ -1,7 +1,7 @@
 import { CategoryForm } from "@/components/categories/category-form";
 import { CategoryGrid } from "@/components/categories/category-grid";
 
-export function Categories() {
+export default function Categories() {
   return (
     <div className="p-6" data-testid="categories-page">
       {/* Header */}

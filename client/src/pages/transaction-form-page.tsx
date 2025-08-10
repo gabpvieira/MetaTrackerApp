@@ -18,7 +18,7 @@ import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
-export function TransactionFormPage() {
+export default function TransactionFormPage() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();

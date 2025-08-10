@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-export function Transactions() {
+export default function Transactions() {
   return (
     <div className="p-6" data-testid="transactions-page">
       {/* Header */}

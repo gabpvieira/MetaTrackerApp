@@ -9,7 +9,7 @@ import { Download, Upload, FileArchive } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-export function Backup() {
+export default function Backup() {
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const { exportData, importData } = useFinanceStore();

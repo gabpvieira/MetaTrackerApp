@@ -1,0 +1,116 @@
+Objetivo
+Registrar a rota do Dashboard e torná‑la a página padrão.
+
+Garantir que o Layout possua <Outlet />.
+
+Ajustar a Sidebar para apontar para /dashboard.
+
+Incluir rota “catch‑all” 404.
+
+Usar Hash Router (evita 404 em refresh/preview).
+
+1) Router (criar/atualizar src/router.tsx)
+tsx
+Copiar
+Editar
+import React, { Suspense, lazy } from "react";
+import { createHashRouter, Navigate } from "react-router-dom";
+import RootLayout from "@/ui/RootLayout";
+
+const DashboardPage   = lazy(() => import("@/pages/Dashboard"));
+const Transactions    = lazy(() => import("@/pages/Transactions"));
+const Categories      = lazy(() => import("@/pages/Categories"));
+const Reports         = lazy(() => import("@/pages/Reports"));
+const Backup          = lazy(() => import("@/pages/Backup"));
+
+const withFallback = (el: React.ReactNode) => (
+  <Suspense fallback={<div className="p-8 text-muted-foreground">Carregando…</div>}>
+    {el}
+  </Suspense>
+);
+
+export const router = createHashRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { index: true, element: <Navigate to="/dashboard" replace /> },
+      { path: "dashboard",   element: withFallback(<DashboardPage />) },
+      { path: "transacoes",  element: withFallback(<Transactions />) },
+      { path: "categorias",  element: withFallback(<Categories />) },
+      { path: "relatorios",  element: withFallback(<Reports />) },
+      { path: "backup",      element: withFallback(<Backup />) },
+      { path: "*", element: <div className="m-12 rounded-2xl bg-slate-900 p-8 text-slate-200">
+        <b>404</b> Página não encontrada
+      </div> },
+    ],
+  },
+]);
+export default router;
+2) Entrypoint (atualizar src/main.tsx ou src/index.tsx)
+tsx
+Copiar
+Editar
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
+import "./styles.css";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+3) Layout com <Outlet /> (criar/atualizar src/ui/RootLayout.tsx)
+tsx
+Copiar
+Editar
+import { Outlet } from "react-router-dom";
+import Sidebar from "@/ui/Sidebar";
+
+export default function RootLayout() {
+  return (
+    <div className="min-h-screen flex">
+      <Sidebar />
+      <main className="flex-1 px-6 md:px-10 py-8">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
+4) Sidebar: apontar para /dashboard (atualizar src/ui/Sidebar.tsx)
+tsx
+Copiar
+Editar
+import { NavLink } from "react-router-dom";
+// ...
+<NavLink to="/dashboard" className={navClass}> {/* Dashboard */} … </NavLink>
+<NavLink to="/transacoes" className={navClass}>Transações</NavLink>
+<NavLink to="/categorias" className={navClass}>Categorias</NavLink>
+<NavLink to="/relatorios" className={navClass}>Relatórios</NavLink>
+<NavLink to="/backup" className={navClass}>Backup</NavLink>
+5) Página do Dashboard (criar src/pages/Dashboard.tsx)
+tsx
+Copiar
+Editar
+export default function Dashboard() {
+  return (
+    <section className="space-y-6">
+      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      {/* componente real de cards e progresso aqui */}
+    </section>
+  );
+}
+6) (Opcional) Base tag
+Em index.html, não use <base href> diferente quando estiver usando createHashRouter.
+
+Critérios de Aceite
+Acessar o app abre /dashboard sem 404.
+
+Sidebar “Dashboard” fica ativa e navega corretamente.
+
+Refresh em qualquer página não quebra (hash router).
+
+Rotas inexistentes mostram o bloco 404 customizado.
+

@@ -11,7 +11,7 @@ import { ptBR } from "date-fns/locale";
 
 type Period = "week" | "month" | "year";
 
-export function Reports() {
+export default function Reports() {
   const { transactions, categories } = useFinanceStore();
   const [period, setPeriod] = useState<Period>("month");
 
