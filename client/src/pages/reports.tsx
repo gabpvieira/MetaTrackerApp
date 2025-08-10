@@ -112,19 +112,19 @@ export default function Reports() {
     <div className="p-6" data-testid="reports-page">
       {/* Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
+        <h2 className="text-3xl font-semibold text-foreground">
           Relatórios
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-muted mt-2">
           Análise detalhada dos seus dados financeiros
         </p>
       </div>
 
       {/* Filters */}
-      <Card className="glass-card rounded-3xl p-6 mb-6 border-0">
+      <Card className="bg-card-bg border border-card-border rounded-3xl p-6 mb-6 border-0">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center space-x-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-foreground">
               Período:
             </label>
             <Select value={period} onValueChange={(value: Period) => setPeriod(value)}>
@@ -153,23 +153,24 @@ export default function Reports() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Income vs Expenses */}
-        <Card className="glass-card rounded-3xl border-0" data-testid="card-income-expense-chart">
+        <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-income-expense-chart">
           <CardContent className="p-6">
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+            <h3 className="text-xl font-semibold text-foreground mb-6">
               Receitas vs Despesas
             </h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={incomeExpenseData}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="name" tick={{ fill: "#CBD5E1" }} />
+                <YAxis tick={{ fill: "#CBD5E1" }} />
                 <Tooltip 
                   formatter={(value: number) => [formatCurrency(value), ""]}
-                  labelStyle={{ color: "#000" }}
+                  labelStyle={{ color: "#F8FAFC" }}
+                  contentStyle={{ backgroundColor: "#1E293B", border: "1px solid #334155", borderRadius: "8px" }}
                 />
                 <Bar 
                   dataKey="value" 
-                  fill="#77FFC8"
+                  fill="#4ADE80"
                   radius={[4, 4, 0, 0]}
                 />
               </BarChart>
@@ -178,26 +179,27 @@ export default function Reports() {
         </Card>
 
         {/* Monthly Evolution */}
-        <Card className="glass-card rounded-3xl border-0" data-testid="card-monthly-evolution-chart">
+        <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-monthly-evolution-chart">
           <CardContent className="p-6">
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+            <h3 className="text-xl font-semibold text-foreground mb-6">
               Evolução Mensal
             </h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={monthlyData}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="month" />
-                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="month" tick={{ fill: "#CBD5E1" }} />
+                <YAxis tick={{ fill: "#CBD5E1" }} />
                 <Tooltip 
                   formatter={(value: number) => [formatCurrency(value), ""]}
-                  labelStyle={{ color: "#000" }}
+                  labelStyle={{ color: "#F8FAFC" }}
+                  contentStyle={{ backgroundColor: "#1E293B", border: "1px solid #334155", borderRadius: "8px" }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="profit" 
-                  stroke="#77FFC8" 
+                  stroke="#60A5FA" 
                   strokeWidth={3}
-                  dot={{ fill: "#77FFC8", strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#60A5FA", strokeWidth: 2, r: 4 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -206,33 +208,33 @@ export default function Reports() {
       </div>
 
       {/* Summary */}
-      <Card className="glass-card rounded-3xl border-0 mt-6">
+      <Card className="bg-card-bg border border-card-border rounded-3xl mt-6">
         <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+          <h3 className="text-xl font-semibold text-foreground mb-4">
             Resumo do Período
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400" data-testid="text-period-income">
+              <p className="text-2xl font-bold text-success" data-testid="text-period-income">
                 {formatCurrency(incomeExpenseData[0].value)}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total de Receitas</p>
+              <p className="text-sm text-muted">Total de Receitas</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-red-600 dark:text-red-400" data-testid="text-period-expenses">
+              <p className="text-2xl font-bold text-danger" data-testid="text-period-expenses">
                 {formatCurrency(incomeExpenseData[1].value)}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total de Despesas</p>
+              <p className="text-sm text-muted">Total de Despesas</p>
             </div>
             <div className="text-center">
               <p className={`text-2xl font-bold ${
                 incomeExpenseData[0].value - incomeExpenseData[1].value >= 0
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-red-600 dark:text-red-400"
+                  ? "text-success"
+                  : "text-danger"
               }`} data-testid="text-period-balance">
                 {formatCurrency(incomeExpenseData[0].value - incomeExpenseData[1].value)}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Saldo</p>
+              <p className="text-sm text-muted">Saldo</p>
             </div>
           </div>
         </CardContent>

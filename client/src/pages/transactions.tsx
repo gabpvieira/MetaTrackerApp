@@ -10,7 +10,7 @@ export default function Transactions() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
+          <h2 className="text-3xl font-semibold text-foreground">
             Transações
           </h2>
           <Link to="/transacoes/nova">
@@ -23,7 +23,7 @@ export default function Transactions() {
             </Button>
           </Link>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-muted mt-2">
           Gerencie suas receitas e despesas
         </p>
       </div>

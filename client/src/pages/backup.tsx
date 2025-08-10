@@ -70,10 +70,10 @@ export default function Backup() {
     <div className="p-6" data-testid="backup-page">
       {/* Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
+        <h2 className="text-3xl font-semibold text-foreground">
           Backup & Restauração
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-muted mt-2">
           Mantenha seus dados seguros com backup regular
         </p>
       </div>
@@ -81,15 +81,15 @@ export default function Backup() {
       {/* Backup Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Export */}
-        <Card className="glass-card rounded-3xl border-0" data-testid="card-export">
+        <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-export">
           <CardContent className="p-6">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mb-4">
               <Download className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               Exportar Dados
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-muted mb-6">
               Faça backup dos seus dados em formato JSON criptografado
             </p>
             <Button
@@ -104,15 +104,15 @@ export default function Backup() {
         </Card>
 
         {/* Import */}
-        <Card className="glass-card rounded-3xl border-0" data-testid="card-import">
+        <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-import">
           <CardContent className="p-6">
             <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mb-4">
               <Upload className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               Importar Dados
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-muted mb-6">
               Restaure seus dados a partir de um arquivo de backup
             </p>
             <div className="space-y-3">
@@ -125,7 +125,7 @@ export default function Backup() {
                 data-testid="input-import-file"
               />
               {isImporting && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted">
                   Restaurando backup...
                 </p>
               )}
@@ -135,15 +135,15 @@ export default function Backup() {
       </div>
 
       {/* Information */}
-      <Card className="glass-card rounded-3xl border-0">
+      <Card className="bg-card-bg border border-card-border rounded-3xl">
         <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center space-x-2">
+          <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center space-x-2">
             <FileArchive className="h-5 w-5" />
             <span>Sobre o Backup</span>
           </h3>
-          <div className="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+          <div className="space-y-4 text-sm text-muted">
             <div>
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">🔒 Segurança</h4>
+              <h4 className="font-medium text-foreground mb-2">🔒 Segurança</h4>
               <p>
                 Todos os backups são criptografados usando AES-GCM antes de serem salvos. 
                 Seus dados estão protegidos mesmo se o arquivo for interceptado.
@@ -151,7 +151,7 @@ export default function Backup() {
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">📁 Conteúdo</h4>
+              <h4 className="font-medium text-foreground mb-2">📁 Conteúdo</h4>
               <p>
                 O backup inclui todas as suas transações, categorias e configurações. 
                 Nenhum dado é perdido durante o processo.
@@ -159,7 +159,7 @@ export default function Backup() {
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">⚠️ Importação</h4>
+              <h4 className="font-medium text-foreground mb-2">⚠️ Importação</h4>
               <p>
                 Ao importar um backup, todos os dados atuais serão substituídos pelos dados do arquivo. 
                 Certifique-se de fazer um backup dos dados atuais antes de importar.
@@ -167,7 +167,7 @@ export default function Backup() {
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">📅 Frequência</h4>
+              <h4 className="font-medium text-foreground mb-2">📅 Frequência</h4>
               <p>
                 Recomendamos fazer backups regulares, especialmente antes de grandes mudanças 
                 ou quando você adiciona muitas transações importantes.

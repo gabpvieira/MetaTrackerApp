@@ -28,9 +28,9 @@ export const router = createHashRouter([
       { 
         path: "*", 
         element: (
-          <div className="m-12 rounded-2xl glass-card p-8 text-center">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">404</h1>
-            <p className="text-gray-600 dark:text-gray-400">Página não encontrada</p>
+          <div className="m-12 rounded-2xl bg-card-bg border border-card-border p-8 text-center">
+            <h1 className="text-4xl font-bold text-foreground mb-4">404</h1>
+        <p className="text-muted">Página não encontrada</p>
           </div>
         ) 
       },

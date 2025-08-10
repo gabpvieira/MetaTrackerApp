@@ -28,9 +28,9 @@ export function CategoryChart() {
   }));
 
   return (
-    <Card className="glass-card rounded-3xl border-0" data-testid="card-category-chart">
+    <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-category-chart">
       <CardContent className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+        <h3 className="text-xl font-semibold text-foreground mb-6">
           Receitas por Categoria
         </h3>
         {chartData.length > 0 ? (
@@ -60,11 +60,11 @@ export function CategoryChart() {
                       className="w-4 h-4 rounded-full"
                       style={{ backgroundColor: category.color }}
                     />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span className="text-sm font-medium text-foreground">
                       {category.name}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-800 dark:text-white" data-testid={`category-amount-${index}`}>
+                  <span className="text-sm font-semibold text-foreground" data-testid={`category-amount-${index}`}>
                     {formatCurrency(category.value)} ({category.percentage}%)
                   </span>
                 </div>
@@ -73,7 +73,7 @@ export function CategoryChart() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-muted">
               Nenhuma receita registrada nesta semana
             </p>
           </div>

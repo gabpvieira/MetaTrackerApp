@@ -17,10 +17,10 @@ export function RecentTransactions() {
   const getCategoryById = (id: string) => categories.find((cat) => cat.id === id);
 
   return (
-    <Card className="glass-card rounded-3xl border-0" data-testid="card-recent-transactions">
+    <Card className="bg-card-bg border border-card-border rounded-3xl" data-testid="card-recent-transactions">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+          <h3 className="text-xl font-semibold text-foreground">
             Transações Recentes
           </h3>
           <Button
@@ -42,7 +42,7 @@ export function RecentTransactions() {
               return (
                 <div
                   key={transaction.id}
-                  className="flex items-center justify-between p-4 bg-white/5 dark:bg-white/5 rounded-2xl hover:bg-white/10 transition-colors duration-200"
+                  className="flex items-center justify-between p-4 bg-card-bg border border-card-border rounded-2xl hover:bg-sidebar-hover transition-colors duration-200"
                   data-testid={`transaction-item-${index}`}
                 >
                   <div className="flex items-center space-x-4">
@@ -59,10 +59,10 @@ export function RecentTransactions() {
                       )}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-800 dark:text-white" data-testid={`transaction-description-${index}`}>
+                      <p className="font-medium text-foreground" data-testid={`transaction-description-${index}`}>
                         {transaction.description}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400" data-testid={`transaction-meta-${index}`}>
+                      <p className="text-sm text-muted" data-testid={`transaction-meta-${index}`}>
                         {format(transaction.date, "dd/MM/yyyy", { locale: ptBR })} • {category?.name || "Sem categoria"}
                       </p>
                     </div>
@@ -70,8 +70,8 @@ export function RecentTransactions() {
                   <span 
                     className={`font-bold ${
                       isIncome 
-                        ? "text-emerald-600 dark:text-emerald-400" 
-                        : "text-red-600 dark:text-red-400"
+                        ? "text-success" 
+                        : "text-danger"
                     }`}
                     data-testid={`transaction-amount-${index}`}
                   >
@@ -83,7 +83,7 @@ export function RecentTransactions() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-muted">
               Nenhuma transação registrada ainda
             </p>
             <Button

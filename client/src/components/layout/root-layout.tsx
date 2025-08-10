@@ -22,7 +22,7 @@ export default function RootLayout() {
 
       {/* Sidebar - Mobile sliding */}
       <div
-        className={`md:hidden fixed left-0 top-0 h-full w-72 glass-card shadow-xl z-50 transform transition-transform duration-300 ${
+        className={`md:hidden fixed left-0 top-0 h-full w-72 bg-card-bg border border-card-border shadow-xl z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         data-testid="mobile-sidebar"
@@ -32,7 +32,7 @@ export default function RootLayout() {
       
       {/* Desktop Sidebar */}
       <div className="hidden md:flex md:w-72 md:flex-col">
-        <div className="glass-card h-full">
+        <div className="bg-card-bg border border-card-border h-full">
           <Sidebar />
         </div>
       </div>

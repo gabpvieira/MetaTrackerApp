@@ -49,7 +49,7 @@ export function CategoryGrid() {
           const stats = getCategoryStats(category.id);
 
           return (
-            <Card key={category.id} className="glass-card rounded-3xl card-hover border-0" data-testid={`category-card-${index}`}>
+            <Card key={category.id} className="bg-card-bg border border-card-border rounded-3xl card-hover border-0" data-testid={`category-card-${index}`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
@@ -62,15 +62,15 @@ export function CategoryGrid() {
                       <IconComponent className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 dark:text-white" data-testid={`category-name-${index}`}>
+                      <h3 className="font-semibold text-foreground" data-testid={`category-name-${index}`}>
                         {category.name}
                       </h3>
                       <Badge 
                         variant="secondary"
                         className={`text-xs ${
                           category.type === "income" 
-                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"
-                            : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                            ? "bg-success/10 text-success border border-success/20"
+                            : "bg-danger/10 text-danger border border-danger/20"
                         }`}
                         data-testid={`category-type-${index}`}
                       >
@@ -82,10 +82,10 @@ export function CategoryGrid() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                      className="p-2 hover:bg-sidebar-hover rounded-lg transition-colors duration-200"
                       data-testid={`button-edit-category-${index}`}
                     >
-                      <Edit className="h-4 w-4 text-gray-500" />
+                      <Edit className="h-4 w-4 text-muted" />
                     </Button>
                     
                     <AlertDialog>
@@ -93,10 +93,10 @@ export function CategoryGrid() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                          className="p-2 hover:bg-sidebar-hover rounded-lg transition-colors duration-200"
                           data-testid={`button-delete-category-${index}`}
                         >
-                          <Trash2 className="h-4 w-4 text-red-500" />
+                          <Trash2 className="h-4 w-4 text-danger" />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
@@ -120,7 +120,7 @@ export function CategoryGrid() {
                   </div>
                 </div>
                 
-                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <div className="space-y-2 text-sm text-muted">
                   <div className="flex justify-between">
                     <span>Transações este mês:</span>
                     <span className="font-semibold" data-testid={`category-count-${index}`}>
@@ -132,8 +132,8 @@ export function CategoryGrid() {
                     <span 
                       className={`font-semibold ${
                         category.type === "income" 
-                          ? "text-emerald-600 dark:text-emerald-400"
-                          : "text-red-600 dark:text-red-400"
+                          ? "text-success"
+                          : "text-danger"
                       }`}
                       data-testid={`category-total-${index}`}
                     >
@@ -147,10 +147,10 @@ export function CategoryGrid() {
         })
       ) : (
         <div className="col-span-full text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-muted mb-4">
             Nenhuma categoria criada ainda
           </p>
-          <p className="text-sm text-gray-400 dark:text-gray-500">
+          <p className="text-sm text-muted">
             Crie sua primeira categoria para começar a organizar suas transações
           </p>
         </div>

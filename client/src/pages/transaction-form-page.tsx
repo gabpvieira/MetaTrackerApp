@@ -86,17 +86,17 @@ export default function TransactionFormPage() {
           <Button
             variant="ghost"
             onClick={() => navigate("/transacoes")}
-            className="mb-4 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"
+            className="mb-4 text-muted hover:text-foreground"
             data-testid="button-back"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar às Transações
           </Button>
           
-          <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
+          <h2 className="text-3xl font-semibold text-foreground">
             {isEditing ? "Editar Transação" : "Nova Transação"}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-muted mt-2">
             {isEditing 
               ? "Atualize os dados da transação" 
               : "Preencha os dados para criar uma nova transação"
@@ -105,9 +105,9 @@ export default function TransactionFormPage() {
         </div>
 
         {/* Form */}
-        <Card className="glass-card rounded-3xl border-0">
+        <Card className="bg-card-bg border border-card-border rounded-3xl">
           <CardHeader>
-            <CardTitle className="text-xl text-gray-800 dark:text-white">
+            <CardTitle className="text-xl text-foreground">
               Dados da Transação
             </CardTitle>
           </CardHeader>

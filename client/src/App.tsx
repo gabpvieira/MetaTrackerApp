@@ -4,7 +4,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/components/ui/theme-provider";
+
 import { useFinanceStore } from "@/stores/finance-store";
 import { useSidebar, useCloseSidebarOnRouteChange } from "@/hooks/use-sidebar";
 
@@ -38,7 +38,7 @@ function AppContent() {
           <div className="w-12 h-12 bg-gradient-to-r from-primary/90 to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
             <div className="w-6 h-6 bg-white rounded-full" />
           </div>
-          <p className="text-gray-600 dark:text-gray-400">Carregando seus dados...</p>
+          <p className="text-muted">Carregando seus dados...</p>
         </div>
       </div>
     );
@@ -63,7 +63,7 @@ function AppContent() {
           {/* Mobile Overlay */}
           {isOpen && (
             <div
-              className="fixed inset-0 z-30 bg-black/50 md:hidden"
+              className="fixed inset-0 z-30 bg-[#000000CC] md:hidden"
               onClick={() => setOpen(false)}
             />
           )}
@@ -93,12 +93,10 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="finance-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <AppContent />
-        </TooltipProvider>
-      </ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <AppContent />
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }

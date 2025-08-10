@@ -46,11 +46,11 @@ export function TransactionList() {
   return (
     <div className="space-y-6" data-testid="transaction-list">
       {/* Filters */}
-      <Card className="glass-card rounded-3xl border-0">
+      <Card className="bg-card-bg border border-card-border rounded-3xl">
         <CardContent className="p-6">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 Tipo:
               </label>
               <Select 
@@ -69,7 +69,7 @@ export function TransactionList() {
             </div>
 
             <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 Categoria:
               </label>
               <Select 
@@ -91,7 +91,7 @@ export function TransactionList() {
             </div>
 
             <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 De:
               </label>
               <Input
@@ -104,7 +104,7 @@ export function TransactionList() {
             </div>
 
             <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 Até:
               </label>
               <Input
@@ -120,7 +120,7 @@ export function TransactionList() {
       </Card>
 
       {/* Transactions */}
-      <Card className="glass-card rounded-3xl border-0">
+      <Card className="bg-card-bg border border-card-border rounded-3xl">
         <CardContent className="p-6">
           {filteredTransactions.length > 0 ? (
             <div className="space-y-3">
@@ -131,7 +131,7 @@ export function TransactionList() {
                 return (
                   <div
                     key={transaction.id}
-                    className="flex items-center justify-between p-4 bg-white/5 dark:bg-white/5 rounded-2xl hover:bg-white/10 transition-colors duration-200"
+                    className="flex items-center justify-between p-4 bg-card-bg border border-card-border rounded-2xl hover:bg-sidebar-hover transition-colors duration-200"
                     data-testid={`transaction-row-${index}`}
                   >
                     <div className="flex items-center space-x-4 flex-1">
@@ -150,7 +150,7 @@ export function TransactionList() {
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
-                          <h4 className="font-medium text-gray-800 dark:text-white truncate" data-testid={`transaction-description-${index}`}>
+                          <h4 className="font-medium text-foreground truncate" data-testid={`transaction-description-${index}`}>
                             {transaction.description}
                           </h4>
                           {category && (
@@ -167,7 +167,7 @@ export function TransactionList() {
                             </Badge>
                           )}
                         </div>
-                        <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center space-x-2 text-sm text-muted">
                           <Calendar className="h-3 w-3" />
                           <span data-testid={`transaction-date-${index}`}>
                             {format(transaction.date, "dd/MM/yyyy", { locale: ptBR })}
@@ -179,8 +179,8 @@ export function TransactionList() {
                         <div 
                           className={`text-lg font-bold ${
                             isIncome 
-                              ? "text-emerald-600 dark:text-emerald-400" 
-                              : "text-red-600 dark:text-red-400"
+                              ? "text-success" 
+                              : "text-danger"
                           }`}
                           data-testid={`transaction-amount-${index}`}
                         >
@@ -193,10 +193,10 @@ export function TransactionList() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                            className="p-2 hover:bg-sidebar-hover rounded-lg transition-colors duration-200"
                             data-testid={`button-edit-transaction-${index}`}
                           >
-                            <Edit className="h-4 w-4 text-gray-500" />
+                            <Edit className="h-4 w-4 text-muted" />
                           </Button>
                         </Link>
                         
@@ -205,7 +205,7 @@ export function TransactionList() {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                              className="p-2 hover:bg-sidebar-hover rounded-lg transition-colors duration-200"
                               data-testid={`button-delete-transaction-${index}`}
                             >
                               <Trash2 className="h-4 w-4 text-red-500" />
@@ -237,10 +237,10 @@ export function TransactionList() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
+              <p className="text-muted mb-4">
                 Nenhuma transação encontrada
               </p>
-              <p className="text-sm text-gray-400 dark:text-gray-500">
+              <p className="text-sm text-muted">
                 Ajuste os filtros ou adicione uma nova transação
               </p>
             </div>

@@ -3,66 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: hsl(210, 20%, 98%);
-  --foreground: hsl(210, 25%, 15%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(210, 25%, 15%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(210, 25%, 15%);
-  --primary: hsl(162, 85%, 45%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(210, 15%, 92%);
-  --secondary-foreground: hsl(210, 25%, 15%);
-  --muted: hsl(210, 15%, 95%);
-  --muted-foreground: hsl(210, 15%, 45%);
-  --accent: hsl(211, 30%, 88%);
-  --accent-foreground: hsl(162, 85%, 35%);
-  --destructive: hsl(0, 84%, 55%);
-  --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(214, 20%, 88%);
-  --input: hsl(214, 20%, 95%);
-  --ring: hsl(162, 85%, 45%);
-  --radius: 1.5rem;
-  
-  /* Custom gradient colors */
-  --gradient-start: hsl(162, 85%, 45%);
-  --gradient-middle: hsl(208, 80%, 70%);
-  --gradient-end: hsl(284, 80%, 75%);
-  
-  /* Glass effect */
-  --glass-bg: hsla(0, 0%, 100%, 0.7);
-  --glass-border: hsla(210, 20%, 80%, 0.3);
-  
-  /* Font */
-  --font-sans: 'Inter', system-ui, sans-serif;
+html, body, #root {
+  height: 100%;
+  background: #0B1120; /* fundo geral */
+  color: #F8FAFC;
 }
 
-.dark {
-  --background: hsl(222, 84%, 5%);
-  --foreground: hsl(210, 40%, 98%);
-  --card: hsl(222, 84%, 8%);
-  --card-foreground: hsl(210, 40%, 98%);
-  --popover: hsl(222, 84%, 8%);
-  --popover-foreground: hsl(210, 40%, 98%);
-  --primary: hsl(162, 100%, 73%);
-  --primary-foreground: hsl(222, 84%, 5%);
-  --secondary: hsl(217, 32%, 17%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217, 32%, 17%);
-  --muted-foreground: hsl(215, 20%, 65%);
-  --accent: hsl(217, 32%, 17%);
-  --accent-foreground: hsl(162, 100%, 73%);
-  --destructive: hsl(0, 62%, 30%);
-  --destructive-foreground: hsl(210, 40%, 98%);
-  --border: hsl(217, 32%, 17%);
-  --input: hsl(217, 32%, 17%);
-  --ring: hsl(162, 100%, 73%);
-  
-  /* Glass effect for dark mode */
-  --glass-bg: hsla(222, 84%, 8%, 0.3);
-  --glass-border: hsla(0, 0%, 100%, 0.1);
+:focus-visible {
+  outline: 2px solid #60A5FA;   /* foco acessível */
+  outline-offset: 2px;
 }
+
+/* Remover vidros/transparências acidentais */
+*[class*="bg-"][class*="/"] { background-color: initial; } /* evita bg com opacidade tailwind acidental */
 
 @layer base {
   * {
@@ -77,26 +30,22 @@
 
 @layer utilities {
   .glass-card {
-    background: var(--glass-bg);
+    background: rgba(30, 41, 59, 0.8);
     backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(51, 65, 85, 0.5);
   }
   
   .gradient-bg {
-    background: radial-gradient(ellipse at top, hsl(162, 85%, 45%, 0.08) 0%, hsl(208, 80%, 70%, 0.06) 50%, hsl(284, 80%, 75%, 0.04) 100%);
-  }
-  
-  .dark .gradient-bg {
     background: radial-gradient(ellipse at top, hsl(162, 100%, 73%, 0.15) 0%, hsl(208, 100%, 85%, 0.1) 50%, hsl(284, 100%, 90%, 0.05) 100%);
   }
   
   .progress-bar {
-    background: linear-gradient(90deg, var(--gradient-start) 0%, var(--gradient-middle) 100%);
+    background: linear-gradient(90deg, #4ADE80 0%, #22C55E 100%);
     transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .sidebar-gradient {
-    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-middle) 50%, var(--gradient-end) 100%);
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%);
   }
   
   .card-hover {
@@ -105,10 +54,6 @@
   
   .card-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  }
-  
-  .dark .card-hover:hover {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 }
