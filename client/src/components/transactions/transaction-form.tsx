@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFinanceStore } from "@/stores/finance-store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +40,7 @@ export function TransactionForm({ children }: TransactionFormProps) {
   const selectedCategory = categories.find((cat) => cat.id === selectedCategoryId);
 
   // Update type when category changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedCategory) {
       form.setValue("type", selectedCategory.type);
     }
