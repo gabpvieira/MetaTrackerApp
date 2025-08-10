@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useFinanceStore } from "@/stores/finance-store";
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -188,14 +189,16 @@ export function TransactionList() {
                       </div>
 
                       <div className="flex items-center space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
-                          data-testid={`button-edit-transaction-${index}`}
-                        >
-                          <Edit className="h-4 w-4 text-gray-500" />
-                        </Button>
+                        <Link to={`/transacoes/${transaction.id}/editar`}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                            data-testid={`button-edit-transaction-${index}`}
+                          >
+                            <Edit className="h-4 w-4 text-gray-500" />
+                          </Button>
+                        </Link>
                         
                         <AlertDialog>
                           <AlertDialogTrigger asChild>

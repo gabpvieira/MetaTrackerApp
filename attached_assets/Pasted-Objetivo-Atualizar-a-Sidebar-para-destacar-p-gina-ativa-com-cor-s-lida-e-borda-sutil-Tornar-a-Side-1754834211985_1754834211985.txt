@@ -1,0 +1,146 @@
+Objetivo
+Atualizar a Sidebar para destacar página ativa com cor sólida e borda sutil.
+
+Tornar a Sidebar deslizante (open/close) com animação e overlay; fechar ao clicar fora; lembrar estado no localStorage.
+
+Habilitar edição de transações: abrir formulário com dados pré‑preenchidos, salvar e refletir no Dashboard em tempo real.
+
+1) Sidebar — item ativo com fundo sólido (sem transparência)
+Trocar Link por NavLink (react-router-dom)
+tsx
+Copiar
+Editar
+import { NavLink } from "react-router-dom";
+
+const itemBase =
+  "flex items-center gap-3 px-4 h-11 rounded-xl transition-colors select-none";
+const itemIdle =
+  "text-slate-300 hover:text-white hover:bg-slate-700/40";
+const itemActive =
+  // Fundo sólido + borda sutil + leve destaque
+  "text-white bg-slate-700 border border-slate-600 shadow-sm";
+
+function SideItem({ to, icon: Icon, label }: {to:string; icon:any; label:string}) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        [itemBase, isActive ? itemActive : itemIdle].join(" ")
+      }
+      end
+    >
+      <Icon className="w-4 h-4" />
+      <span className="font-medium">{label}</span>
+    </NavLink>
+  );
+}
+Container da Sidebar (fundo sólido, não translúcido)
+tsx
+Copiar
+Editar
+<div className="relative">
+  <aside
+    className={`fixed z-40 top-0 left-0 h-screen w-72
+      bg-[linear-gradient(180deg,#0C1424_0%,#0B1B2B_100%)]
+      border-r border-slate-800 shadow-[0_10px_30px_rgba(0,0,0,0.35)]
+      ${isOpen ? "translate-x-0" : "-translate-x-full"}
+      transition-transform duration-300 will-change-transform`}
+  >
+    {/* conteúdo */}
+  </aside>
+
+  {/* Overlay para mobile */}
+  {isOpen && (
+    <div
+      className="fixed inset-0 z-30 bg-black/50 md:hidden"
+      onClick={() => setOpen(false)}
+    />
+  )}
+</div>
+2) Sidebar deslizante (toggle + persistência)
+Estado + persistência
+tsx
+Copiar
+Editar
+// hooks/useSidebar.ts
+import { useEffect } from "react";
+import { create } from "zustand";
+
+type S = { isOpen: boolean; setOpen: (v:boolean)=>void; toggle:()=>void; }
+export const useSidebar = create<S>((set) => ({
+  isOpen: JSON.parse(localStorage.getItem("sbOpen") ?? "true"),
+  setOpen: (v) => {
+    localStorage.setItem("sbOpen", JSON.stringify(v));
+    set({ isOpen: v });
+  },
+  toggle: () => {
+    set(s => {
+      const v = !s.isOpen;
+      localStorage.setItem("sbOpen", JSON.stringify(v));
+      return { isOpen: v };
+    });
+  },
+}));
+
+// Fechar ao navegar (mobile)
+export function useCloseSidebarOnRouteChange() {
+  const setOpen = useSidebar(s => s.setOpen);
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  useEffect(() => {
+    if (isDesktop) return;
+    const onPop = () => setOpen(false);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+}
+Botão de abrir/fechar
+tsx
+Copiar
+Editar
+// Header
+<button
+  onClick={() => useSidebar.getState().toggle()}
+  className="md:hidden rounded-xl p-2 bg-slate-800 text-white"
+  aria-label="Alternar menu"
+>
+  <Icons.menu />
+</button>
+No desktop (≥ md), mantenha isOpen=true por padrão e ignore overlay.
+Em mobile, overlay fecha ao clicar fora.
+
+3) Edição de Transação (rota + form pré‑preenchido)
+Rotas
+tsx
+Copiar
+Editar
+// routes.tsx
+<Route path="/transacoes" element={<TransactionsPage />} />
+<Route path="/transacoes/nova" element={<TransactionForm />} />
+<Route path="/transacoes/:id/editar" element={<TransactionForm />} />
+Lista com ação Editar
+tsx
+Copiar
+Editar
+// TransactionsTable.tsx
+<Link
+  to={`/transacoes/${row.id}/editar`}
+  className="text-sky-400 hover:underline"
+>
+  Editar
+</Link>
+Formulário: carregar registro e preencher
+tsx
+Copiar
+Editar
+// TransactionForm.tsx
+import { useParams, useNavigate } from "react-router-dom";
+import { useLiveQuery } from "dexie-react-hooks";
+import
+
+
+
+
+
+
+
+Perguntar ao ChatGPT
