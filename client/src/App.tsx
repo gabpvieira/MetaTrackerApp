@@ -93,7 +93,7 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" storageKey="finance-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="finance-ui-theme">
         <TooltipProvider>
           <Toaster />
           <AppContent />

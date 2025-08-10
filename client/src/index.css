@@ -5,34 +5,34 @@
 
 :root {
   --background: hsl(210, 20%, 98%);
-  --foreground: hsl(210, 25%, 7.8431%);
+  --foreground: hsl(210, 25%, 15%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(210, 25%, 7.8431%);
+  --card-foreground: hsl(210, 25%, 15%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(210, 25%, 7.8431%);
-  --primary: hsl(162, 100%, 73%);
-  --primary-foreground: hsl(210, 25%, 7.8431%);
-  --secondary: hsl(210, 25%, 7.8431%);
-  --secondary-foreground: hsl(0, 0%, 100%);
-  --muted: hsl(210, 20%, 94%);
-  --muted-foreground: hsl(210, 25%, 7.8431%);
-  --accent: hsl(211, 51%, 92%);
-  --accent-foreground: hsl(162, 100%, 73%);
-  --destructive: hsl(0, 84%, 60%);
+  --popover-foreground: hsl(210, 25%, 15%);
+  --primary: hsl(162, 85%, 45%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 15%, 92%);
+  --secondary-foreground: hsl(210, 25%, 15%);
+  --muted: hsl(210, 15%, 95%);
+  --muted-foreground: hsl(210, 15%, 45%);
+  --accent: hsl(211, 30%, 88%);
+  --accent-foreground: hsl(162, 85%, 35%);
+  --destructive: hsl(0, 84%, 55%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(214, 32%, 91%);
-  --input: hsl(214, 32%, 91%);
-  --ring: hsl(162, 100%, 73%);
+  --border: hsl(214, 20%, 88%);
+  --input: hsl(214, 20%, 95%);
+  --ring: hsl(162, 85%, 45%);
   --radius: 1.5rem;
   
   /* Custom gradient colors */
-  --gradient-start: hsl(162, 100%, 73%);
-  --gradient-middle: hsl(208, 100%, 85%);
-  --gradient-end: hsl(284, 100%, 90%);
+  --gradient-start: hsl(162, 85%, 45%);
+  --gradient-middle: hsl(208, 80%, 70%);
+  --gradient-end: hsl(284, 80%, 75%);
   
   /* Glass effect */
-  --glass-bg: hsla(0, 0%, 100%, 0.1);
-  --glass-border: hsla(0, 0%, 100%, 0.2);
+  --glass-bg: hsla(0, 0%, 100%, 0.7);
+  --glass-border: hsla(210, 20%, 80%, 0.3);
   
   /* Font */
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -83,6 +83,10 @@
   }
   
   .gradient-bg {
+    background: radial-gradient(ellipse at top, hsl(162, 85%, 45%, 0.08) 0%, hsl(208, 80%, 70%, 0.06) 50%, hsl(284, 80%, 75%, 0.04) 100%);
+  }
+  
+  .dark .gradient-bg {
     background: radial-gradient(ellipse at top, hsl(162, 100%, 73%, 0.15) 0%, hsl(208, 100%, 85%, 0.1) 50%, hsl(284, 100%, 90%, 0.05) 100%);
   }
   
